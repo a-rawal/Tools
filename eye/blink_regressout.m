@@ -24,7 +24,7 @@ dat.pupil(isnan(dat.pupil)) = interp1(find(~isnan(dat.pupil)), ...
 % STEP 1: BAND-PASS FILTER
 % ====================================================== %
 
-if plotme,
+if plotme
     clf;  subplot(611); plot(dat.time,dat.pupil);
     axis tight; box off; ylabel('Interp');
     set(gca, 'xtick', []);
@@ -41,7 +41,7 @@ dat.lowfreqresid = dat.pupil - dat.hpfilt;
 [b,a] = butter(2, 10 / fsample, 'low');
 dat.bpfilt = filtfilt(b,a, dat.hpfilt);
 
-if plotme,
+if plotme
     subplot(612); plot(dat.time,dat.bpfilt);
     axis tight; box off; ylabel('Bandpass');
     set(gca, 'xtick', []);
@@ -174,7 +174,7 @@ designM = [ones(size(reg1))' reg1' reg2'];
 % estimate glm weights
 % [b, ~, resid] = regress(dat.bpfilt', designM);
 
-b = designM \ dat.bpfilt;
+b = designM \ dat.bpfilt';
 prediction = designM * b;
 resid = dat.bpfilt - prediction;
 
